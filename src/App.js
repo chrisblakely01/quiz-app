@@ -3,51 +3,14 @@ import Question from './components/Question';
 import Score from './components/Score';
 import StartGame from './components/StartGame';
 import Navbar from './components/Navbar';
+import CreateQuiz from './components/CreateQuiz';
 
 export default function App() {
 	const [currentQuestion, setCurrentQuestion] = useState(0);
 	const [score, setScore] = useState(0);
 	const [gameStarted, setGameStarted] = useState(false);
-	const [gameMode, setGameMode] = useState('play');		//	gameMode can be 'play' or 'create'
-
-	const questions = [
-		{
-			questionText: 'What is the capital of France?',
-			answerOptions: [
-				{ answerText: 'C1', isCorrect: false },
-				{ answerText: 'C2', isCorrect: false },
-				{ answerText: 'Paris', isCorrect: true },
-				{ answerText: 'Dublin', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'Who is CEO of Tesla?',
-			answerOptions: [
-				{ answerText: 'Jeff Bezos', isCorrect: false },
-				{ answerText: 'Elon Musk', isCorrect: true },
-				{ answerText: 'Bill Gates', isCorrect: false },
-				{ answerText: 'Tony Stark', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'The iPhone was created by which company?',
-			answerOptions: [
-				{ answerText: 'Apple', isCorrect: true },
-				{ answerText: 'Intel', isCorrect: false },
-				{ answerText: 'Amazon', isCorrect: false },
-				{ answerText: 'Microsoft', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-	];
+	const [gameMode, setGameMode] = useState('create');		//	gameMode can be 'play' or 'create'
+	const [questions, setQuestions] = useState([]);
 
 	const handleAnswerOptionClick = (isCorrect) => {
 		if (isCorrect) {
@@ -90,7 +53,10 @@ export default function App() {
 				/>
 				</div>
 			) : (
-				<p>create mode</p>
+				<CreateQuiz 
+					questions={questions}
+					setQuestions={setQuestions}
+				/>
 			)}
 		</>
 	);
