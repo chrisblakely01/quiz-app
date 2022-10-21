@@ -26,6 +26,10 @@ export default function App() {
 	};
 
 	function startGame(){
+		if (questions.length === 0){
+			console.log("Can not start game with no questions. Click on \'Create\' to add questions");
+			return;
+		}
 		setGameStarted(true);
 		setCurrentQuestion(0);
 		setScore(0);
@@ -36,7 +40,7 @@ export default function App() {
 			<Navbar setGameMode={setGameMode}/>
 			{gameMode === 'play' ? (
 				<div className='app'>
-				{!gameStarted ? (
+				{!gameStarted? (
 					<StartGame 
 						startGame={startGame}
 					/>

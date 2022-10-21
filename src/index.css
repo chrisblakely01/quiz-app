@@ -110,6 +110,30 @@ button {
   cursor: pointer;
 }
 
+.create-quiz {
+  background-color: red;
+  margin: 10%;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+input {
+  width: 800px;
+  display: inline;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #252d4a;
+  border-radius: 15px;
+  padding: 5px;
+  margin: 5px;
+  /*justify-content: flex-start;
+  align-items: center;*/
+  border: 5px solid #234668;
+  cursor: pointer;
+}
+
 .correct {
   background-color: #2f922f;
 }

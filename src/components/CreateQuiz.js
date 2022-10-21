@@ -1,98 +1,126 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 export default function CreateQuiz({ questions, setQuestions }){
+  const emptyValues = {
+    question: "",
+    answer1: "",
+    answer2: "",
+    answer3: "",
+    answer4: "",
+    correctanswer: undefined
+  }
+  const [newValues, setNewValues] = useState(emptyValues);
+
+  const handleChange = ({target}) => {
+    const {id, name, value} = target;
+
+    if (name !== "correctanswer") {
+      setNewValues((prev) => ({...prev, [name]: value}));
+    } else {
+      const choice = Number(id.slice(-1)); // id example correctanswer4
+      setNewValues((prev) => ({...prev, correctanswer: choice}));
+    }
+  }  
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const arrayOfValues = Object.values(newValues);
+    if (arrayOfValues.some(val => val == false)) {
+      console.log("cannot submit. some filds are empty");
+      return;
+    }
+
+    setQuestions((prev) => {
+      return [...prev, {
+          questionText: newValues.question,
+          answerOptions: [
+            { answerText: newValues.answer1, isCorrect: newValues.correctanswer === 1 },
+            { answerText: newValues.answer2, isCorrect: newValues.correctanswer === 2 },
+            { answerText: newValues.answer3, isCorrect: newValues.correctanswer === 3 },
+            { answerText: newValues.answer4, isCorrect: newValues.correctanswer === 4 },
+        ]
+      }]
+    });
+    setNewValues(emptyValues);
+  }
+
   return(
     <div className='create-quiz'>
       <h1>Create Quiz</h1>
       <h2>Question No: {questions.length+1}</h2>
       <div>
-        <form onSubmit={(event) => setQuestions((prev) => {
-          event.preventDefault();
-          for (let i=0; i<10; i++){
-            console.log(`index ${i}: ${event.target[i].value}, ${event.target[i].checked || ''}`);
-          }
-          const enteredQuestion = event.target[0].value;
-          const enteredAnswer1 = event.target[1].value;
-          const enteredAnswer2 = event.target[2].value;
-          const enteredAnswer3 = event.target[3].value;
-          const enteredAnswer4 = event.target[4].value;
-          const correctAnswer = event.target[5].value;
-
-          console.log(`length: ${event.target.length}`);
-          console.log(`type: ${typeof event.target}`);
-          console.log(`1 ${event.target[5].checked}`);
-          console.log(`2 ${event.target[6].checked}`);
-          console.log(`3 ${event.target[7].checked}`);
-          console.log(`4 ${event.target[8].checked}`);
-          // if (event.target.some(tar => tar.value === '')){
-          //   console.log(`Fill all the fields before submitting`);
-          // }
-
-          console.log(enteredQuestion, enteredAnswer1, enteredAnswer2, enteredAnswer3, enteredAnswer4, correctAnswer)
-          
-          return [...prev, {
-            questionText: enteredQuestion,
-            answerOptions: [
-              { answerText: event.target[1].value, isCorrect: event.target[5].checked },
-              { answerText: event.target[2].value, isCorrect: event.target[6].checked },
-              { answerText: event.target[3].value, isCorrect: event.target[7].checked },
-              { answerText: event.target[4].value, isCorrect: event.target[8].checked },
-            ]
-          }]
-        })}>
-          <label for="question">Type question</label>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="question">Question</label>
           <input 
             type="text"
             id="question"
-          />
+            name="question"
+            value={newValues.question}
+            onChange={handleChange}
+          /><br />
           <h2>Answer Options</h2>
-          <label for="option1">Option 1</label>
+          <label htmlFor="answer1">Answer 1</label>
           <input
             type="text"
-            id="option1"
+            id="answer1"
+            name="answer1"
+            value={newValues.answer1}
+            onChange={handleChange}
           />
-          <label for="option2">Option 2</label>
-          <input
-            type="text"
-            id="option2"
-          />
-          <label for="option4">Option 3</label>
-          <input
-            type="text"
-            id="option3"
-          />
-          <label for="option4">Option 4</label>
-          <input
-            type="text"
-            id="option4"
-          />
-          <label for="correct-answer">1</label>
           <input 
-            id="correct-answer"
-            name="correct-answer"
+            id="correctanswer1"
+            name="correctanswer"
             type="radio"
             value="1"
-          />
-          <label for="correct-answer">2</label>
+            onChange={handleChange}
+          /><br />
+          <label htmlFor="answer2">Answer 2</label>
+          <input
+            type="text"
+            id="answer2"
+            name="answer2"
+            value={newValues.answer2}
+            onChange={handleChange}
+          /><br />
+          <label htmlFor="answer3">Answer 3</label>
+          <input
+            type="text"
+            id="answer3"
+            name="answer3"
+            value={newValues.answer3}
+            onChange={handleChange}
+          /><br />
+          <label htmlFor="answer4">Answer 4</label>
+          <input
+            type="text"
+            id="answer4"
+            name="answer4"
+            value={newValues.answer4}
+            onChange={handleChange}
+          /><br />
+          <label htmlFor="correctanswer2">2</label>
           <input 
-            id="correct-answer"
-            name="correct-answer"
+            id="correctanswer2"
+            name="correctanswer"
             type="radio"
             value="2"
+            onChange={handleChange}
           />
-          <label for="correct-answer">3</label>
+          <label htmlFor="correct-answer3">3</label>
           <input 
-            id="correct-answer"
-            name="correct-answer"
+            id="correctanswer3"
+            name="correctanswer"
             type="radio"
             value="3"
+            onChange={handleChange}
           />
-          <label for="correct-answer">4</label>
+          <label htmlFor="correctanswer4">4</label>
           <input 
-            id="correct-answer"
-            name="correct-answer"
+            id="correctanswer4"
+            name="correctanswer"
             type="radio"
             value="4"
+            onChange={handleChange}
           />
           <input type="submit" value="Submit"/>
         </form>
@@ -101,42 +129,4 @@ export default function CreateQuiz({ questions, setQuestions }){
   )
 }
 
-
-// [
-//   {
-//     questionText: 'What is the capital of France?',
-//     answerOptions: [
-//       { answerText: 'C1', isCorrect: false },
-//       { answerText: 'C2', isCorrect: false },
-//       { answerText: 'Paris', isCorrect: true },
-//       { answerText: 'Dublin', isCorrect: false },
-//     ],
-//   },
-//   {
-//     questionText: 'Who is CEO of Tesla?',
-//     answerOptions: [
-//       { answerText: 'Jeff Bezos', isCorrect: false },
-//       { answerText: 'Elon Musk', isCorrect: true },
-//       { answerText: 'Bill Gates', isCorrect: false },
-//       { answerText: 'Tony Stark', isCorrect: false },
-//     ],
-//   },
-//   {
-//     questionText: 'The iPhone was created by which company?',
-//     answerOptions: [
-//       { answerText: 'Apple', isCorrect: true },
-//       { answerText: 'Intel', isCorrect: false },
-//       { answerText: 'Amazon', isCorrect: false },
-//       { answerText: 'Microsoft', isCorrect: false },
-//     ],
-//   },
-//   {
-//     questionText: 'How many Harry Potter books are there?',
-//     answerOptions: [
-//       { answerText: '1', isCorrect: false },
-//       { answerText: '4', isCorrect: false },
-//       { answerText: '6', isCorrect: false },
-//       { answerText: '7', isCorrect: true },
-//     ],
-//   },
-// ];
+add disables for submit button if fileds are empty
