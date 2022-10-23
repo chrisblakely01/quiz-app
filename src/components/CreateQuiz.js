@@ -7,28 +7,42 @@ export default function CreateQuiz({ questions, setQuestions }){
     answer2: "",
     answer3: "",
     answer4: "",
-    correctanswer: undefined
+    answer1correct: false,
+    answer2correct: false,
+    answer3correct: false,
+    answer4correct: false
   }
   const [newValues, setNewValues] = useState(emptyValues);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const handleChange = ({target}) => {
     const {id, name, value} = target;
 
-    if (name !== "correctanswer") {
+    if (name !== "correct-answer") {
       setNewValues((prev) => ({...prev, [name]: value}));
     } else {
-      const choice = Number(id.slice(-1)); // id example correctanswer4
-      setNewValues((prev) => ({...prev, correctanswer: choice}));
+      console.log(`correct-answer... ${id} ${value}`);
+      setNewValues((prev) => ({...prev, answer1correct: false}));
+      setNewValues((prev) => ({...prev, answer2correct: false}));
+      setNewValues((prev) => ({...prev, answer3correct: false}));
+      setNewValues((prev) => ({...prev, answer4correct: false}));
+      setNewValues((prev) => ({...prev, [id]: true}));
+      //const choice = Number(id.slice(-1)); // id example correctanswer4
+      //setNewValues((prev) => ({...prev, correctanswer: choice}));
+    }
+
+    const arrayOfValues = Object.values(newValues);
+    const arrayOfValues1 = arrayOfValues.slice(0, 5);
+    const arrayOfValues2 = arrayOfValues.slice(5);
+    if (arrayOfValues1.some(val => val == false) || arrayOfValues2.every(val => val === false)) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
     }
   }  
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const arrayOfValues = Object.values(newValues);
-    if (arrayOfValues.some(val => val == false)) {
-      console.log("cannot submit. some filds are empty");
-      return;
-    }
 
     setQuestions((prev) => {
       return [...prev, {
@@ -48,85 +62,51 @@ export default function CreateQuiz({ questions, setQuestions }){
     <div className='create-quiz'>
       <h1>Create Quiz</h1>
       <h2>Question No: {questions.length+1}</h2>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="question">Question</label>
-          <input 
-            type="text"
-            id="question"
-            name="question"
-            value={newValues.question}
-            onChange={handleChange}
-          /><br />
-          <h2>Answer Options</h2>
-          <label htmlFor="answer1">Answer 1</label>
-          <input
-            type="text"
-            id="answer1"
-            name="answer1"
-            value={newValues.answer1}
-            onChange={handleChange}
-          />
-          <input 
-            id="correctanswer1"
-            name="correctanswer"
-            type="radio"
-            value="1"
-            onChange={handleChange}
-          /><br />
-          <label htmlFor="answer2">Answer 2</label>
-          <input
-            type="text"
-            id="answer2"
-            name="answer2"
-            value={newValues.answer2}
-            onChange={handleChange}
-          /><br />
-          <label htmlFor="answer3">Answer 3</label>
-          <input
-            type="text"
-            id="answer3"
-            name="answer3"
-            value={newValues.answer3}
-            onChange={handleChange}
-          /><br />
-          <label htmlFor="answer4">Answer 4</label>
-          <input
-            type="text"
-            id="answer4"
-            name="answer4"
-            value={newValues.answer4}
-            onChange={handleChange}
-          /><br />
-          <label htmlFor="correctanswer2">2</label>
-          <input 
-            id="correctanswer2"
-            name="correctanswer"
-            type="radio"
-            value="2"
-            onChange={handleChange}
-          />
-          <label htmlFor="correct-answer3">3</label>
-          <input 
-            id="correctanswer3"
-            name="correctanswer"
-            type="radio"
-            value="3"
-            onChange={handleChange}
-          />
-          <label htmlFor="correctanswer4">4</label>
-          <input 
-            id="correctanswer4"
-            name="correctanswer"
-            type="radio"
-            value="4"
-            onChange={handleChange}
-          />
-          <input type="submit" value="Submit"/>
-        </form>
-      </div>
+
+      <form onSubmit={handleSubmit} className='create-quiz-form'>
+        <label htmlFor="question">Question</label>
+        <textarea 
+          rows="3"
+          id="question"
+          name="question"
+          value={newValues.question}
+          onChange={handleChange}
+        />
+
+        {[1, 2, 3, 4].map(i => {
+          return (
+            <>
+              <p>Answer {i}</p>
+              <input 
+                className="correct-answer"
+                type="button"
+                name="correct-answer"
+                id={`answer${i}correct`}
+                value={newValues[`answer${i}correct`] ? "Correct" : "Wrong"}
+                style={{ 
+                  "border-color": newValues[`answer${i}correct`] ? 'green' : 'red', 
+                  color: newValues[`answer${i}correct`] ? 'green' : 'red'
+                }}
+                onClick={handleChange}
+              />
+              <textarea 
+                rows="2"
+                id={`answer${i}`}
+                name={`answer${i}`}
+                value={newValues[`answer${i}`]}
+                onChange={handleChange}
+              />
+            </>
+          );
+        })}
+
+        <input 
+          type="submit"
+          value="Submit"
+          id="submit-button"
+          disabled = {isDisabled ? "disabled" : ""}
+        />
+      </form>
     </div>
   )
 }
-
-add disables for submit button if fileds are empty

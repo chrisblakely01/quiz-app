@@ -36,7 +36,7 @@ export default function App() {
 	}
 
 	return (
-		<>
+		<main>
 			<Navbar setGameMode={setGameMode}/>
 			{gameMode === 'play' ? (
 				<div className='app'>
@@ -62,6 +62,6 @@ export default function App() {
 					setQuestions={setQuestions}
 				/>
 			)}
-		</>
+		</main>
 	);
 }
