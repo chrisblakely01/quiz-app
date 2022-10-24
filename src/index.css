@@ -19,12 +19,19 @@ main {
 
 .navbar {
   display: flex;
+  justify-content: space-between;
+  margin: 5px;
+  width: 600px;
+}
+
+.navbar button {
+  width: 49%;
   margin: 5px;
 }
 
 .question-container {
   background-color: #252d4a;
-  width: 450px;
+  width: 600px;
   min-height: 200px;
   height: min-content;
   border-radius: 15px;
@@ -77,6 +84,12 @@ main {
   justify-content: space-between;
 }
 
+.answer-section button {
+  width: 90%;
+  font-weight: normal;
+  margin: 5px;
+}
+
 button {
   margin: 0 20px;
 }
@@ -98,8 +111,14 @@ textarea,
 }
 
 .create-quiz {
-  padding: 50px;
-  width: 80%;
+  background-color: #252d4a;
+  width: 600px;
+  min-height: 200px;
+  height: min-content;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 10px 10px 42px 0px rgba(0, 0, 0, 0.75);
+
 }
 
 .create-quiz-form {
@@ -119,6 +138,7 @@ textarea {
   width: 100%;
   text-align: left;
   font-weight: normal;
+  resize: none;
 }
 
 .correct-answer {

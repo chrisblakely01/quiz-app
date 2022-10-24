@@ -9,8 +9,15 @@ export default function App() {
 	const [currentQuestion, setCurrentQuestion] = useState(0);
 	const [score, setScore] = useState(0);
 	const [gameStarted, setGameStarted] = useState(false);
-	const [gameMode, setGameMode] = useState('create');		//	gameMode can be 'play' or 'create'
-	const [questions, setQuestions] = useState([]);
+	const [gameMode, setGameMode] = useState('play');		//	gameMode can be 'play' or 'create'
+	const [questions, setQuestions] = useState([{
+		question: "What song will Spongebob play in Band Geeks?",
+		answer1: "F.U.N Song",
+		answer2: "Sweet Victory",
+		answer3: "Now That We're Men",
+		answer4: "Gary Komm Heim!",
+		correctanswer: 2  //  we start counting from one
+	}]);
 
 	const handleAnswerOptionClick = (isCorrect) => {
 		if (isCorrect) {
@@ -41,23 +48,32 @@ export default function App() {
 			{gameMode === 'play' ? (
 				<div className='app'>
 				{!gameStarted? (
-					<StartGame 
-						startGame={startGame}
-					/>
+					<>
+						<StartGame 
+							startGame={startGame}
+						/>
+						{score !== 0 ? (<Score 
+							score={score}
+							questions={questions}
+							/>) : ""
+						}
+					</>
 				) : (
-					<Question 
-					currentQuestion={currentQuestion}
-					questions={questions}
-					handleAnswerOptionClick={handleAnswerOptionClick}
-				/>
+					<>
+						<Question 
+							currentQuestion={currentQuestion}
+							questions={questions}
+							handleAnswerOptionClick={handleAnswerOptionClick}
+						/>
+						<Score 
+							score={score}
+							questions={questions}
+						/>
+					</>
 				)}
-				<Score 
-					score={score}
-					questions={questions}
-				/>
 				</div>
 			) : (
-				<CreateQuiz 
+				<CreateQuiz
 					questions={questions}
 					setQuestions={setQuestions}
 				/>

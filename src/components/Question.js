@@ -7,11 +7,11 @@ export default function Question({ currentQuestion, questions, handleAnswerOptio
         <div className='question-count'>
           <span>Question {currentQuestion + 1}</span>/{questions.length}
         </div>
-        <div className='question-text'>{questions[currentQuestion].questionText}</div>
+        <div className='question-text'>{questions[currentQuestion].question}</div>
       </div>
       <div className='answer-section'>
-        {questions[currentQuestion].answerOptions.map((answerOption) => (
-          <button onClick={() => handleAnswerOptionClick(answerOption.isCorrect)}>{answerOption.answerText}</button>
+        {Object.values(questions[currentQuestion]).slice(1, 5).map((answer, i) => (
+          <button onClick={() => handleAnswerOptionClick(i+1 === questions[currentQuestion].correctanswer)}>{answer}</button>
         ))}
       </div>
     </div>
