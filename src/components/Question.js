@@ -10,8 +10,12 @@ export default function Question({ currentQuestion, questions, handleAnswerOptio
         <div className='question-text'>{questions[currentQuestion].question}</div>
       </div>
       <div className='answer-section'>
-        {Object.values(questions[currentQuestion]).slice(1, 5).map((answer, i) => (
-          <button onClick={() => handleAnswerOptionClick(i+1 === questions[currentQuestion].correctanswer)}>{answer}</button>
+        {Object.values(questions[currentQuestion]).slice(1, 5).map((answer, index) => (
+          <button 
+            key={index} 
+            onClick={() => handleAnswerOptionClick(index+1 === questions[currentQuestion].correctanswer)}>
+              {answer}
+          </button>
         ))}
       </div>
     </div>

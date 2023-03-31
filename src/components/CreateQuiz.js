@@ -64,32 +64,29 @@ export default function CreateQuiz({ questions, setQuestions }){
           onChange={handleChange}
         />
 
-        {[1, 2, 3, 4].map(i => {
-          return (
-            <>
-              <p>Answer {i}</p>
-              <input 
-                className="correct-answer"
-                type="button"
-                name="correct-answer"
-                id={i}
-                value={newValues.correctanswer === i ? "Correct" : "Wrong"}
-                style={{ 
-                  "border-color": newValues.correctanswer === i  ? 'green' : 'red', 
-                  color: newValues.correctanswer === i  ? 'green' : 'red'
-                }}
-                onClick={handleChange}
-              />
-              <textarea 
-                rows="2"
-                id={`answer${i}`}
-                name={`answer${i}`}
-                value={newValues[`answer${i}`]}
-                onChange={handleChange}
-              />
-            </>
-          );
-        })}
+        {[1, 2, 3, 4].map(i => <>
+            <p>Answer {i}</p>
+            <input 
+              className="correct-answer"
+              type="button"
+              name="correct-answer"
+              id={i}
+              value={newValues.correctanswer === i ? "Correct" : "Wrong"}
+              style={{ 
+                borderColor: newValues.correctanswer === i  ? 'green' : 'red', 
+                color: newValues.correctanswer === i  ? 'green' : 'red'
+              }}
+              onClick={handleChange}
+            />
+            <textarea 
+              rows="2"
+              id={`answer${i}`}
+              name={`answer${i}`}
+              value={newValues[`answer${i}`]}
+              onChange={handleChange}
+            />
+          </>
+        )}
 
         <input 
           type="submit"
