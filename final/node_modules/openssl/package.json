@@ -1,0 +1,23 @@
+{
+  "name": "openssl",
+  "version": "2.0.0",
+  "description": "Nodejs openssl wrapper",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/131/node-openssl.git"
+  },
+  "keywords": [
+    "openssl"
+  ],
+  "author": "Robert Burcknr <rbu@millabs.net>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/131/node-openssl/issues"
+  },
+  "homepage": "https://github.com/131/node-openssl",
+  "dependencies": {}
+}
