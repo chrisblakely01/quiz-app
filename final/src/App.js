@@ -56,6 +56,7 @@ export default function App() {
 			setShowScore(true);
 		}
 	};
+	
 	return (
 		<div className='app'>
 			{showScore ? (
